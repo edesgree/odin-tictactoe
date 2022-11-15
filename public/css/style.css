@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*PROJECT CSS*/
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 body {
@@ -57,6 +56,10 @@ header {
   color: #227c9d;
 }
 
+#game-status {
+  text-align: center;
+}
+
 .board {
   align-content: center;
   background-color: #fef9ef;
@@ -68,20 +71,19 @@ header {
   width: 70vh;
 }
 .board.o .cell:not(.x):hover {
+  background-image: url("../images/o.svg");
   opacity: 0.5;
-}
-.board.o .cell:not(.x):hover::before {
-  content: "⭘";
 }
 .board.x .cell:not(.o):hover {
+  background-image: url("../images/x.svg");
   opacity: 0.5;
-}
-.board.x .cell:not(.o):hover::before {
-  content: "×";
 }
 .board .cell {
   align-items: center;
   background-color: #17c3b2;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 80%;
   display: flex;
   font-size: 90px;
   font-weight: bold;
@@ -93,11 +95,11 @@ header {
   background-color: #55ebdc;
   cursor: pointer;
 }
-.board .cell.x::before {
-  content: "×";
+.board .cell.x {
+  background-image: url("../images/x.svg");
 }
-.board .cell.o::before {
-  content: "⭘";
+.board .cell.o {
+  background-image: url("../images/o.svg");
 }
 
 .scores {

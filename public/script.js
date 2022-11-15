@@ -4,7 +4,8 @@ const app = () => {
     const board = document.getElementById('board');
     const statusElement = document.getElementById('game-status');
     const restartButton = document.getElementById('restartButton');
-    console.log('cells', cells)
+
+    
     const X_CLASS = 'x';
     const O_CLASS = 'o';
     const WINNING_COMBINATIONS = [
@@ -63,9 +64,11 @@ const app = () => {
         //switch turns
 
     }
+    // add the player selection as a class on the cell clicked
     function placeMark(cell, currentClass) {
         cell.classList.add(currentClass);
     }
+    // player change
     function swapTurns() {
         OTurn = !OTurn
     }
@@ -78,15 +81,19 @@ const app = () => {
             board.classList.add(X_CLASS)
         }
     }
+    // check if the cell contain the current class and if its correspond to a combination in the combination table
     function checkWin(currentClass) {
+        // return true if one combination is matched
         return WINNING_COMBINATIONS.some(combination => {
+            // return true if current combination is true in 3 indexes (3 cells)
             return combination.every(index => {
+                // return true if cell contain the current class
                 return cells[index].classList.contains(currentClass)
             })
         })
     }
     function isDraw() {
-        // check if every cells is filled
+        // check if every cells is filled. if every cell return a class X or O, it means all cells are full
         return [...cells].every(cell => {
             return cell.classList.contains(X_CLASS) || cell.classList.contains(O_CLASS)
         })

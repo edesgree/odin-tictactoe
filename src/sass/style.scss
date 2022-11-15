@@ -17,8 +17,8 @@ $font: "Open Sans", sans-serif;
 $border-radius: 5px;
 $cell-size: 100px;
 $mark-size: calc($cell-size * 0.9);
-$mark-x:"\00d7";
-$mark-o:"\2B58";
+$mark-x: "\00d7";
+$mark-o: "\2B58";
 body {
     align-items: center;
     background-color: $light;
@@ -66,35 +66,36 @@ h6 {
 header {
     color: $main;
 }
+#game-status {
+    text-align: center;
+}
 .board {
     align-content: center;
     background-color: $light;
     display: grid;
     gap: 2px;
     grid-template-columns: repeat(3, auto);
-
     height: 70vh;
     justify-content: center;
     width: 70vh;
     &.o {
         .cell:not(.x):hover {
+            background-image: url("#{$assetsPath}o.svg");
             opacity: 0.5;
-            &::before {
-                content:$mark-o;
-            }
         }
     }
     &.x {
         .cell:not(.o):hover {
+            background-image: url("#{$assetsPath}x.svg");
             opacity: 0.5;
-            &::before {
-                content: $mark-x;
-            }
         }
     }
     .cell {
         align-items: center;
         background-color: $main2;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 80%;
         display: flex;
         font-size: $mark-size;
         font-weight: bold;
@@ -105,11 +106,11 @@ header {
             background-color: lighten($main2, 20%);
             cursor: pointer;
         }
-        &.x::before {
-            content: $mark-x;
+        &.x {
+            background-image: url("#{$assetsPath}x.svg");
         }
-        &.o::before {
-            content: $mark-o;
+        &.o {
+            background-image: url("#{$assetsPath}o.svg");
         }
     }
 }
