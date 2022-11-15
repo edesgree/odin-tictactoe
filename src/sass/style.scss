@@ -59,7 +59,9 @@ h5,
 h6 {
     font-weight: bold;
 }
-
+header{
+    color:$main;
+}
 .board{
     background-color: $light;
     display: grid;
@@ -84,6 +86,22 @@ h6 {
 .controls{
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
+}
+button{
+    background-color: $main;
+    border:none;
+    border-radius: $border-radius;
+    color:white;
+    font-weight: bold;
+    padding:15px 20px;
+    &:hover{
+        background-color: lighten($main,20%);
+        cursor:pointer
+    }
+}
+footer{
+    padding: 20px;
 }
 @media only screen and (max-width: 700px) {
    

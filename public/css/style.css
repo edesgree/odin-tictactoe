@@ -52,6 +52,10 @@ h6 {
   font-weight: bold;
 }
 
+header {
+  color: #227c9d;
+}
+
 .board {
   background-color: #fef9ef;
   display: grid;
@@ -78,4 +82,22 @@ h6 {
 .controls {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #227c9d;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  padding: 15px 20px;
+}
+button:hover {
+  background-color: #4db3d8;
+  cursor: pointer;
+}
+
+footer {
+  padding: 20px;
 }
