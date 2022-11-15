@@ -1,14 +1,17 @@
 // TIC TAC TOE
 
 // player factory function
-const player = (user, mark, turn) => {
-    let score = 0;
-    const getScore = (score) => {
-        player.score++;
+const player = (name, mark, turn, score) => {
+    
+    const updateScore = () => {
+        score++;
+        console.log('score', score)
     }
-    const greetName = () => console.log(`hello ${user} your mark is ${mark}`);
-    return { user, mark, turn, getScore, greetName }
+    const greetName = () => console.log(`hello ${name} your mark is ${mark}`);
+    return { name, mark, turn, score, updateScore, greetName }
 }
+
+
 
 const gameBoard = (() => {
     const X_CLASS = 'x';
@@ -29,7 +32,7 @@ const gameBoard = (() => {
     }
     const resetBoard = () => {
         console.log('resetBoard', resetBoard)
-        OTurn = false;
+        playerO.turn = false;
         for (let i = 0; i < gameboard.length; i++) {
 
 
@@ -50,7 +53,8 @@ const gameBoard = (() => {
 // display elements
 const statusElement = document.getElementById('game-status');
 const restartButton = document.getElementById('restartButton');
-
+const scoreDivO = document.getElementById('score-player-o');
+const scoreDivX = document.getElementById('score-player-x');
 
 
 
@@ -64,6 +68,10 @@ const restartButton = document.getElementById('restartButton');
 
 const gameController = (() => {
     console.log("startgame")
+
+    // create players
+    const playerO = player('john', 'o', false,0);
+    const playerX = player('bob', 'x', false,0);
     const WINNING_COMBINATIONS = [
         // gameboard
         // 0 1 2
@@ -78,25 +86,43 @@ const gameController = (() => {
         [0, 4, 8],
         [2, 4, 6]
     ];
-    let OTurn = false;
+    scoreDivO.innerText = playerO.score;
+    scoreDivX.innerText = playerX.score;
     const startGame = () => {
         gameBoard.cells.forEach(cell => {
 
-            cell.classList.remove(gameBoard.X_CLASS);
-            cell.classList.remove(gameBoard.O_CLASS);
+            cell.classList.remove(playerX.mark);
+            cell.classList.remove(playerO.mark);
             cell.removeEventListener('click', handleClick);
             cell.addEventListener('click', handleClick, { once: true })
         });
         setBoardHoverClass();
         statusElement.innerText = '';
     }
+    function updateScoreDisplay(player,scoreDiv){
+        player.score++;
+        scoreDiv.innerText = player.score;
+        console.log('scoreDiv', scoreDiv)
+        console.log(`${player.mark} score:${player.score}`, player.score)
+        
+    }
     function handleClick(e) {
         console.log('clicked');
         const cell = e.target;
-        const currentClass = OTurn ? gameBoard.O_CLASS : gameBoard.X_CLASS;
+        const currentClass = playerO.turn ? playerO.mark : playerX.mark;
         placeMark(cell, currentClass);
+        console.log('placeMark', placeMark)
         if (checkWin(currentClass)) {
-            console.log('winner')
+
+            if (playerO.turn) {
+                updateScoreDisplay(playerO,scoreDivO)
+                
+                console.log(`winner is ${playerO.name} with mark: ${playerO.mark}`)
+
+            } else {
+                updateScoreDisplay(playerX,scoreDivX)
+                console.log(`winner is ${playerX.name} with mark: ${playerX.mark}`)
+            }
             endGame(false)
 
         } else if (isDraw()) {
@@ -108,15 +134,14 @@ const gameController = (() => {
         //check win
         //check draw
         //switch turns
-
     }
     function setBoardHoverClass() {
-        board.classList.remove(gameBoard.X_CLASS)
-        board.classList.remove(gameBoard.O_CLASS)
-        if (OTurn) {
-            board.classList.add(gameBoard.O_CLASS)
+        board.classList.remove(playerX.mark)
+        board.classList.remove(playerO.mark)
+        if (playerO.turn) {
+            board.classList.add(playerO.mark)
         } else {
-            board.classList.add(gameBoard.X_CLASS)
+            board.classList.add(playerX.mark)
         }
     }
     // add the player selection as a class on the cell clicked
@@ -125,7 +150,7 @@ const gameController = (() => {
     }
     // player change
     function swapTurns() {
-        OTurn = !OTurn
+        playerO.turn = !playerO.turn
     }
 
     // check if the cell contain the current class and if its correspond to a combination in the combination table
@@ -142,16 +167,19 @@ const gameController = (() => {
     function isDraw() {
         // check if every cells is filled. if every cell return a class X or O, it means all cells are full
         return [...gameBoard.cells].every(cell => {
-            return cell.classList.contains(gameBoard.X_CLASS) || cell.classList.contains(gameBoard.O_CLASS)
+            return cell.classList.contains(playerX.mark) || cell.classList.contains(playerO.mark)
         })
     }
     function endGame(draw) {
+        let endgame = false;
         if (draw) {
-            statusElement.innerText = `It's a draw`
+            statusElement.innerText = `It's a draw`;
+            endgame = true;
         } else {
-            statusElement.innerText = `${OTurn ? "O" : "X"} wins!`
-
+            statusElement.innerText = `${playerO.turn ? "O" : "X"} wins!`
+            endgame = true;
         }
+        return false;
     }
 
     return { startGame }
