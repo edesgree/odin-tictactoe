@@ -51,3 +51,31 @@ h5,
 h6 {
   font-weight: bold;
 }
+
+.board {
+  background-color: #fef9ef;
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 400px;
+  width: 400px;
+}
+.board .cell {
+  background-color: #17c3b2;
+}
+.board .cell:hover {
+  background-color: #55ebdc;
+  cursor: pointer;
+}
+
+.scores {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-around;
+}
