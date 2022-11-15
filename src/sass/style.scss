@@ -15,6 +15,8 @@ $greylight: #e2e8f0;
 $greylight2: #eff2f7;
 $font: "Open Sans", sans-serif;
 $border-radius: 5px;
+$cell-size: 100px;
+$mark-size: calc($cell-size * 0.9);
 body {
     align-items: center;
     background-color: $light;
@@ -59,58 +61,65 @@ h5,
 h6 {
     font-weight: bold;
 }
-header{
-    color:$main;
+header {
+    color: $main;
 }
-.board{
+.board {
+    align-content: center;
     background-color: $light;
     display: grid;
-    gap:2px;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,1fr);
-    height: 400px;
-    width: 400px;
-    .cell{
+    gap: 2px;
+    grid-template-columns: repeat(3, auto);
+
+    height: 70vh;
+    justify-content: center;
+    width: 70vh;
+    .cell {
+        align-items: center;
         background-color: $main2;
-        &:hover{
-            background-color: lighten($main2,20%);
-            cursor:pointer
+        display: flex;
+        font-size: $mark-size;
+        font-weight: bold;
+        height: $cell-size;
+        justify-content: center;
+        width: $cell-size;
+        &:hover {
+            background-color: lighten($main2, 20%);
+            cursor: pointer;
         }
     }
 }
-.scores{
+.scores {
     display: flex;
     gap: 10px;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
-.controls{
+.controls {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
 }
-button{
+button {
     background-color: $main;
-    border:none;
+    border: none;
     border-radius: $border-radius;
-    color:white;
+    color: white;
     font-weight: bold;
-    padding:15px 20px;
-    &:hover{
-        background-color: lighten($main,20%);
-        cursor:pointer
+    padding: 15px 20px;
+    &:hover {
+        background-color: lighten($main, 20%);
+        cursor: pointer;
     }
 }
-footer{
+footer {
     padding: 20px;
 }
 @media only screen and (max-width: 700px) {
-   
 }
 @media only screen and (max-width: 500px) {
-    
 }
 @media only screen and (max-width: 400px) {
-   
 }
 @media only screen and (min-width: 960px) {
 }

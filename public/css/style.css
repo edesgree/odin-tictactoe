@@ -57,16 +57,24 @@ header {
 }
 
 .board {
+  align-content: center;
   background-color: #fef9ef;
   display: grid;
   gap: 2px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  height: 400px;
-  width: 400px;
+  grid-template-columns: repeat(3, auto);
+  height: 70vh;
+  justify-content: center;
+  width: 70vh;
 }
 .board .cell {
+  align-items: center;
   background-color: #17c3b2;
+  display: flex;
+  font-size: 90px;
+  font-weight: bold;
+  height: 100px;
+  justify-content: center;
+  width: 100px;
 }
 .board .cell:hover {
   background-color: #55ebdc;
@@ -77,6 +85,7 @@ header {
   display: flex;
   gap: 10px;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .controls {
