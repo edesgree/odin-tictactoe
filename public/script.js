@@ -11,27 +11,27 @@ const player = (user, mark, turn) => {
 const gameBoard = (() => {
     //gameboard module
     const gameboard = ['', '', '', '', '', '', '', '', '',]
-    const cells = document.querySelectorAll('[data-cell]');
-    console.log('cells', cells)
+    const cells = [];
     const board = document.getElementById('board');
-    console.log('board', board)
-    
+   
     const buildBoard = () => {
         for (i = 0; i < gameboard.length; i++) {
             const cell = document.createElement('div');
             cell.classList.add('cell');
             cell.setAttribute('data-cell','');
             board.appendChild(cell);
+            cells.push(cell)
         }
     }
-    console.log('gameBoard.cells0', cells)
+    
     return{
         cells,
         buildBoard
     }
 })();
 
-console.log(gameBoard.cells)
+
+
 const statusElement = document.getElementById('game-status');
 const restartButton = document.getElementById('restartButton');
 
@@ -39,9 +39,9 @@ const X_CLASS = 'x';
 const O_CLASS = 'o';
 const WINNING_COMBINATIONS = [
     // gameboard
-    // [0, 1, 2]
-    // [3, 4, 5]
-    // [6, 7, 8]
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -56,9 +56,7 @@ let OTurn;
 gameBoard.buildBoard();
 
 
-console.log('test')
-console.log('gameBoard.cells1', Array.from(gameBoard.cells))
-console.log('gameBoard.cells3', [...gameBoard.cells])
+
 
 
 
@@ -146,8 +144,6 @@ restartButton.addEventListener('click', () => {
 })
 
 //startGame();
-
-
 
 
 
