@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*PROJECT CSS*/
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 body {
@@ -66,6 +67,18 @@ header {
   justify-content: center;
   width: 70vh;
 }
+.board.o .cell:not(.x):hover {
+  opacity: 0.5;
+}
+.board.o .cell:not(.x):hover::before {
+  content: "⭘";
+}
+.board.x .cell:not(.o):hover {
+  opacity: 0.5;
+}
+.board.x .cell:not(.o):hover::before {
+  content: "×";
+}
 .board .cell {
   align-items: center;
   background-color: #17c3b2;
@@ -79,6 +92,12 @@ header {
 .board .cell:hover {
   background-color: #55ebdc;
   cursor: pointer;
+}
+.board .cell.x::before {
+  content: "×";
+}
+.board .cell.o::before {
+  content: "⭘";
 }
 
 .scores {

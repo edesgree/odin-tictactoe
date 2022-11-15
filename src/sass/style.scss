@@ -17,6 +17,8 @@ $font: "Open Sans", sans-serif;
 $border-radius: 5px;
 $cell-size: 100px;
 $mark-size: calc($cell-size * 0.9);
+$mark-x:"\00d7";
+$mark-o:"\2B58";
 body {
     align-items: center;
     background-color: $light;
@@ -74,6 +76,22 @@ header {
     height: 70vh;
     justify-content: center;
     width: 70vh;
+    &.o {
+        .cell:not(.x):hover {
+            opacity: 0.5;
+            &::before {
+                content:$mark-o;
+            }
+        }
+    }
+    &.x {
+        .cell:not(.o):hover {
+            opacity: 0.5;
+            &::before {
+                content: $mark-x;
+            }
+        }
+    }
     .cell {
         align-items: center;
         background-color: $main2;
@@ -86,6 +104,12 @@ header {
         &:hover {
             background-color: lighten($main2, 20%);
             cursor: pointer;
+        }
+        &.x::before {
+            content: $mark-x;
+        }
+        &.o::before {
+            content: $mark-o;
         }
     }
 }
