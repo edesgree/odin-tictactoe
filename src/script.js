@@ -13,15 +13,15 @@ const gameBoard = (() => {
     //gameboard module
     const gameboard = ['', '', '', '', '', '', '', '', '',]
     const cells = [];
+    
     const board = document.getElementById('board');
 
     const buildBoard = () => {
         for (i = 0; i < gameboard.length; i++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
-            cell.setAttribute('data-cell', '');
-            board.appendChild(cell);
-            cells.push(cell)
+            cells[i] = document.createElement('div');
+            cells[i].classList.add('cell');
+            cells[i].setAttribute('data-cell', '');
+            board.appendChild(cells[i]);
         }
     }
     const resetBoard = () => {
