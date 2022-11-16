@@ -2,8 +2,7 @@
 
 // player factory function
 const player = (name, mark, turn, score) => {
-    const greetName = () => console.log(`hello ${name} your mark is ${mark}`);
-    return { name, mark, turn, score, greetName }
+    return { name, mark, turn, score }
 }
 
 // gameBoard module
@@ -63,16 +62,16 @@ const gameController = (() => {
         [0, 4, 8],
         [2, 4, 6]
     ];
-    let gameState; // A RETIRER
+    
     // display score for both players
     scoreDivO.innerText = playerO.score;
     scoreDivX.innerText = playerX.score;
+    
     // start a game
     const startGame = (vsbot) => {
-        console.log('vsbot', vsbot)
         // reset board
         resetTurn();
-        console.log('gameState', gameState)
+       
         // for each cell, listen for click
         gameBoard.cells.forEach(cell => {
             // remove css class and click event
@@ -104,7 +103,7 @@ const gameController = (() => {
                 emptyCells.push(i);
             }
         }
-        console.log('emptyCells', emptyCells)
+        
         // choose a random spot in this array of possible moves
         let choice = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         return choice;
@@ -112,45 +111,35 @@ const gameController = (() => {
 
     // what to do when click on cell
     function handleClick(e) {
-        console.log("================================================")
-        let humanCanPlay = true; // A RETIRER
-        console.log('vsbot in handleClick', vsbot)
         const cell = e.target;
         const cellIndex = cell.dataset.cell;
         const cellAvailability = cell.dataset.taken;
-        console.log(`cellAvailability at ${cellIndex}`, cellAvailability)
-        console.log(`Turn to play:${playerO.turn ? playerO.name : playerX.name}`)
 
         // change current class to the current players mark
         const currentClass = playerO.turn ? playerO.mark : playerX.mark;
-        console.log('currentClass begining of human turn ', currentClass)
 
         // keep a track of the plays in the moves history array
         gameBoard.movesHistory[cellIndex] = currentClass;
-        // in vsbot mode (TODO block the user click)
+        
         if (vsbot) {
-            humanCanPlay = false;
-            console.log('humanCanPlay', humanCanPlay)
+            // TODO: in vsbot mode, block the user click
             e.preventDefault();
         }
 
         // if cell has not been taken by computer (or other player), we can place mark
         if (!cellAvailability) {
             playTurn(cell, currentClass);
-            console.log('currentClass end of human turn', currentClass);
         } else {
-            console.log('cell already taken');
+            //cell already taken
             e.preventDefault();
         }
 
         // call vsbot turn, computer is playerO by default
         if (vsbot && playerO.turn) {
             toggleWaitAnimation(); // wait animation on cursor
-            console.log('hey', gameBoard.movesHistory)
 
             // assign a random choice for the computer
             let botMove = botChoice();
-            console.log(`computer choose ${botMove} index`)
             let computerCell = gameBoard.cells[botMove];
 
             // add computer move in the moves history array
@@ -158,11 +147,8 @@ const gameController = (() => {
             // create a wait time for more realism
             setTimeout(() => {
                 playTurn(computerCell, playerO.mark);
-                humanCanPlay = true;
                 toggleWaitAnimation();
             }, 1500);
-            console.log(`Turn to play:${playerO.turn ? playerO.name : playerX.name}`)
-            console.log('hey2', gameBoard.movesHistory)
         }
     }
     function playTurn(cellChoice, playerMark) {
@@ -171,32 +157,20 @@ const gameController = (() => {
     }
     function endTurn(playerMark) {
         if (checkWin(playerMark)) {
-            if (playerO.turn) {
+            if (playerO.turn) { // winner is playerO
                 updateScoreDisplay(playerO, scoreDivO);
-                console.log(`winner is ${playerO.name} with mark: ${playerO.mark}`);
-            } else {
+            } else { // winner is playerX
                 updateScoreDisplay(playerX, scoreDivX);
-                console.log(`winner is ${playerX.name} with mark: ${playerX.mark}`);
             }
             endGame(draw = false);
-            gameState = false;
-            //empty moves history
-            gameBoard.movesHistory.fill("");
-            console.log('gameState', gameState)
-
         } else if (isDraw()) {
             endGame(draw = true);
-            gameState = false;
-            //empty moves history
-            gameBoard.movesHistory.fill("");
-            console.log('gameState', gameState)
         } else {
             swapTurns();
             setBoardHoverClass();
         }
     }
     function resetTurn() {
-        gameState = true;
         playerO.turn = false;
         playerX.turn = true;
         setBoardHoverClass();
@@ -255,8 +229,8 @@ const gameController = (() => {
         } else {
             endGameDisplay(`${playerO.turn ? playerO.name : playerX.name} wins!`);
         }
-        gameState = false;
-
+        //empty moves history
+        gameBoard.movesHistory.fill("");
     }
     // display end of game message
     function endGameDisplay(string) {
@@ -264,7 +238,7 @@ const gameController = (() => {
         board.classList.add('overlay');
         statusElement.innerText = ``;
     }
-    
+
     restartButton.addEventListener('click', () => {
         board.classList.remove('overlay');
         //restart game with the game mode value in parameter (vsbot or vshuman)
