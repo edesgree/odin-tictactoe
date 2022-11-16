@@ -1,5 +1,5 @@
 /*PROJECT CSS*/
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');//VARS
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
 $containerWidth: min(100% - 2rem, 60rem);
 $assetsPath: "../images/";
 
@@ -7,17 +7,18 @@ $bright: #ffcb77;
 $bright2: #fe6d73;
 $main: #2ca124;
 $main2: #17c3b2;
-$light: #fef9ef;
+$light: #faf4e8;
 $dark: #323031;
 $greydark: #0c1e24;
 $greylight: #e2e8f0;
 $greylight2: #eff2f7;
-$font:'Comfortaa', cursive;
+$font: "Comfortaa", cursive;
 $border-radius: 5px;
 $cell-size: 100px;
 $mark-size: calc($cell-size * 0.9);
 $mark-x: "\00d7";
 $mark-o: "\2B58";
+$fwb:700;
 body {
     align-items: center;
     background-color: $light;
@@ -38,6 +39,7 @@ a {
 }
 h1 {
     font-size: 2em;
+    font-weight: $fwb;
 }
 h2 {
     font-size: 1.5em;
@@ -66,6 +68,8 @@ header {
     color: $main;
 }
 #game-status {
+    line-height: 18px;
+    margin-bottom: 10px;
     text-align: center;
 }
 .board {
@@ -74,14 +78,14 @@ header {
     display: grid;
     gap: 2px;
     grid-template-columns: repeat(3, auto);
-    
+
     justify-content: center;
-   margin-bottom: 20px;
+    margin-bottom: 20px;
     position: relative;
     &.overlay::before {
         align-items: center;
-        background-color: rgba($main2,.8);
-        
+        background-color: rgba($main2, 0.8);
+
         color: white;
         content: attr(data-overlay-content);
         display: flex;
@@ -133,9 +137,17 @@ header {
     gap: 10px;
     justify-content: space-between;
     margin-bottom: 20px;
-    img{
-        display: inline-block;
-        transform: scale(-1,1);
+    & > div {
+        align-items: center;
+        display: inline-flex;
+        font-weight: bold;
+        gap: 5px;
+        justify-content: space-between;
+        vertical-align: middle;
+        img {
+            display: inline-block;
+            transform: scale(-1, 1);
+        }
     }
 }
 .controls {

@@ -75,7 +75,7 @@ const gameController = (() => {
     scoreDivO.innerText = playerO.score;
     scoreDivX.innerText = playerX.score;
     const startGame = () => {
-        statusElement.innerText = `It's playerX.turn!!!`;
+        
         gameState = true;
         console.log('gameState', gameState)
         gameBoard.cells.forEach(cell => {
@@ -88,7 +88,7 @@ const gameController = (() => {
         });
 
         setBoardHoverClass();
-        statusElement.innerText = '';
+        statusElement.innerText = `It's  ${playerX.name}'s turn`;
     }
     function updateScoreDisplay(player, scoreDiv) {
         // increment score

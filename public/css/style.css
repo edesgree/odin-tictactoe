@@ -1,8 +1,8 @@
 /*PROJECT CSS*/
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
 body {
   align-items: center;
-  background-color: #fef9ef;
+  background-color: #faf4e8;
   color: #323031;
   display: flex;
   flex-direction: column;
@@ -21,6 +21,7 @@ a {
 
 h1 {
   font-size: 2em;
+  font-weight: 700;
 }
 
 h2 {
@@ -57,12 +58,14 @@ header {
 }
 
 #game-status {
+  line-height: 18px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
 .board {
   align-content: center;
-  background-color: #fef9ef;
+  background-color: #faf4e8;
   display: grid;
   gap: 2px;
   grid-template-columns: repeat(3, auto);
@@ -121,7 +124,15 @@ header {
   justify-content: space-between;
   margin-bottom: 20px;
 }
-.scores img {
+.scores > div {
+  align-items: center;
+  display: inline-flex;
+  font-weight: bold;
+  gap: 5px;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+.scores > div img {
   display: inline-block;
   transform: scale(-1, 1);
 }
