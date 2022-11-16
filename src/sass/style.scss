@@ -1,5 +1,5 @@
 /*PROJECT CSS*/
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
 $containerWidth: min(100% - 2rem, 60rem);
 $assetsPath: "../images/";
 
@@ -18,7 +18,7 @@ $cell-size: 100px;
 $mark-size: calc($cell-size * 0.9);
 $mark-x: "\00d7";
 $mark-o: "\2B58";
-$fwb:700;
+$fwb: 700;
 body {
     align-items: center;
     background-color: $light;
@@ -109,26 +109,30 @@ header {
             opacity: 0.5;
         }
     }
-    &.wait{
-        .cell:hover{
-            cursor:wait;
+    &.wait {
+        .cell:hover {
+            cursor: wait;
         }
-        &::after{
+        &::after {
             animation: progressBar 1.5s ease-in-out;
-            animation-fill-mode:both;
-            background-color: $main   ;
-            bottom:-5px;
-            content:''; 
+            animation-fill-mode: both;
+            background-color: $main;
+            bottom: -5px;
+            content: "";
             grid-column: 1 / -1;
             height: 3px;
             position: absolute;
             position: absolute;
         }
-    } 
+    }
     @keyframes progressBar {
-        0% { width: 0; }
-        100% { width: 100%; }
-      }
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
+        }
+    }
     .cell {
         align-items: center;
         background-color: $main2;
@@ -151,7 +155,6 @@ header {
         &.x {
             background-image: url("#{$assetsPath}hippo.svg");
         }
-        
     }
 }
 .scores {
@@ -174,13 +177,29 @@ header {
 }
 .controls {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin-bottom: 20px;
+    button {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+    select {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        padding: 15px 10px;
+        option {
+            border-radius: 0;
+        }
+    }
+}
+button,
+select {
+    border-radius: $border-radius;
 }
 button {
     background-color: $main;
     border: none;
-    border-radius: $border-radius;
+
     color: white;
     font-family: $font;
     font-weight: bold;

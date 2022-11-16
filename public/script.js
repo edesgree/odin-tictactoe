@@ -44,8 +44,8 @@ const gameBoard = (() => {
 
 const gameController = (() => {
     let vsbot = false;
-    
-    
+
+
 
 
     // display elements
@@ -54,7 +54,7 @@ const gameController = (() => {
     const scoreDivO = document.getElementById('score-player-o');
     const scoreDivX = document.getElementById('score-player-x');
     const opponentChoice = document.getElementById('vsbot');
-    
+
 
     // create players
     const playerO = player('Croco', 'o', false, 0);
@@ -125,7 +125,7 @@ const gameController = (() => {
     // what to do when click on cell
     function handleClick(e) {
         let humanCanPlay = true;
-        console.log('vsbot in handleClick',vsbot)
+        console.log('vsbot in handleClick', vsbot)
         const cell = e.target;
         const cellIndex = cell.dataset.cell;
         const cellAvailability = cell.dataset.taken;
@@ -148,7 +148,7 @@ const gameController = (() => {
         }
 
         // if cell has not been taken by computer, we can place mark
-        if (!cellAvailability ) {
+        if (!cellAvailability) {
 
             placeMark(cell, currentClass);
             endTurn(currentClass);
@@ -282,12 +282,13 @@ const gameController = (() => {
     restartButton.addEventListener('click', () => {
         console.log("restart");
         board.classList.remove('overlay');
-        startGame(vsbot=('true'===opponentChoice.value));
+        //restart game with the select value in parameter (vsbot or vshuman)
+        startGame(vsbot = ('true' === opponentChoice.value));
     })
     // opponentChoice.addEventListener('change', () => {
     //     vsbot=opponentChoice.value;
     // })
-    function toggleWaitCursor(){
+    function toggleWaitCursor() {
         board.classList.toggle('wait');
     }
     return { startGame }

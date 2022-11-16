@@ -162,14 +162,30 @@ header {
 
 .controls {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin-bottom: 20px;
+}
+.controls button {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.controls select {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  padding: 15px 10px;
+}
+.controls select option {
+  border-radius: 0;
+}
+
+button,
+select {
+  border-radius: 5px;
 }
 
 button {
   background-color: #2ca124;
   border: none;
-  border-radius: 5px;
   color: white;
   font-family: "Comfortaa", cursive;
   font-weight: bold;
