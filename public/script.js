@@ -43,9 +43,9 @@ const gameBoard = (() => {
 
 
 const gameController = (() => {
-    const gameModes = ['vshuman', 'vsbot'];
-    const gameModeActive = gameModes[1];
-    console.log('gameModeActive', gameModeActive)
+    const vsbot = true;
+    
+    
 
 
     // display elements
@@ -76,7 +76,7 @@ const gameController = (() => {
     scoreDivX.innerText = playerX.score;
     const startGame = () => {
 
-        gameState = true;
+        resetTurn();
         console.log('gameState', gameState)
         gameBoard.cells.forEach(cell => {
             // remove css class and click event
@@ -115,64 +115,72 @@ const gameController = (() => {
         console.log('emptyCells', emptyCells)
         // choose a random spot
         let choice = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        
+
         return choice;
 
     }
     // what to do when click on cell
     function handleClick(e) {
-
+        let humanCanPlay = true;
         const cell = e.target;
         const cellIndex = cell.dataset.cell;
         const cellAvailability = cell.dataset.taken;
         console.log(`cellAvailability at ${cellIndex}`, cellAvailability)
-        
-        console.log(`Turn to play:${ playerO.turn ? playerO.name : playerX.name}`)
-function setCellInfo(){
-    
-}
+
+        console.log(`Turn to play:${playerO.turn ? playerO.name : playerX.name}`)
+        function setCellInfo() {
+
+        }
         // change current class to the current players mark
         const currentClass = playerO.turn ? playerO.mark : playerX.mark;
         console.log('currentClass begining of human turn ', currentClass)
 
         // keep a track of the plays in the gameBoard array
         gameBoard.movesHistory[cellIndex] = currentClass;
+        if (vsbot) {
+            humanCanPlay = false;
+            console.log('humanCanPlay', humanCanPlay)
+            e.preventDefault();
+        }
 
         // if cell has not been taken by computer, we can place mark
-        if (!cellAvailability) {
-            
+        if (!cellAvailability ) {
+
             placeMark(cell, currentClass);
             endTurn(currentClass);
-        console.log('currentClass end of human turn', currentClass)
-        }else{
+            console.log('currentClass end of human turn', currentClass)
+        } else {
             console.log('case non disponible pour human')
         }
 
-        
+
         // call vsbot turn
-        if (gameModeActive == gameModes[1] && playerO.turn) {
-            
-        console.log('hey', gameBoard.movesHistory)
+        if (vsbot && playerO.turn) {
+            toggleWaitCursor();
+
+            console.log('hey', gameBoard.movesHistory)
             // computer turn                 A BOUGER
-            
+
             let a = botChoice()
             console.log(`computer choose ${a} index`)
             let computerCell = gameBoard.cells[a];
-            
+
             // keep a track of the plays in the gameBoard array
             gameBoard.movesHistory[a] = playerO.mark;
-            //setTimeout(() => {
+            setTimeout(() => {
                 placeMark(computerCell, playerO.mark);
-            endTurn(playerO.mark);
-             // }, 500);
-             console.log(`Turn to play:${ playerO.turn ? playerO.name : playerX.name}`)
-             console.log('hey2', gameBoard.movesHistory)
+                endTurn(playerO.mark);
+                humanCanPlay = true;
+                toggleWaitCursor();
+            }, 1500);
+            console.log(`Turn to play:${playerO.turn ? playerO.name : playerX.name}`)
+            console.log('hey2', gameBoard.movesHistory)
         }
-        
+
 
     }
 
-    function endTurn(currentClass){
+    function endTurn(currentClass) {
         if (checkWin(currentClass)) {
             if (playerO.turn) {
                 updateScoreDisplay(playerO, scoreDivO);
@@ -183,6 +191,7 @@ function setCellInfo(){
             }
             endGame(draw = false);
             gameState = false;
+            //empty moves history
             gameBoard.movesHistory.fill("");
             console.log('gameState', gameState)
 
@@ -196,6 +205,12 @@ function setCellInfo(){
             swapTurns();
             setBoardHoverClass();
         }
+    }
+    function resetTurn() {
+        gameState = true;
+        playerO.turn = false;
+        playerX.turn = true;
+        setBoardHoverClass();
     }
     // display next player when hovering cell
     function setBoardHoverClass() {
@@ -265,6 +280,9 @@ function setCellInfo(){
         board.classList.remove('overlay');
         startGame();
     })
+    function toggleWaitCursor(){
+        board.classList.toggle('wait');
+    }
     return { startGame }
 })();
 

@@ -60,6 +60,7 @@ header {
 #game-status {
   line-height: 18px;
   margin-bottom: 10px;
+  min-height: 18px;
   text-align: center;
 }
 
@@ -86,13 +87,35 @@ header {
   width: 100%;
   z-index: 10;
 }
-.board.o .cell:not(.x):hover {
+.board.o:not(.wait) .cell:not(.x):hover {
   background-image: url("../images/croco.svg");
   opacity: 0.5;
 }
-.board.x .cell:not(.o):hover {
+.board.x:not(.wait) .cell:not(.o):hover {
   background-image: url("../images/hippo.svg");
   opacity: 0.5;
+}
+.board.wait .cell:hover {
+  cursor: wait;
+}
+.board.wait::after {
+  animation: progressBar 1.5s ease-in-out;
+  animation-fill-mode: both;
+  background-color: #2ca124;
+  bottom: -5px;
+  content: "";
+  grid-column: 1/-1;
+  height: 3px;
+  position: absolute;
+  position: absolute;
+}
+@keyframes progressBar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
 }
 .board .cell {
   align-items: center;

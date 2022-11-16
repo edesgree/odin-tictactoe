@@ -70,6 +70,7 @@ header {
 #game-status {
     line-height: 18px;
     margin-bottom: 10px;
+    min-height: 18px;
     text-align: center;
 }
 .board {
@@ -96,18 +97,38 @@ header {
         width: 100%;
         z-index: 10;
     }
-    &.o {
+    &.o:not(.wait) {
         .cell:not(.x):hover {
             background-image: url("#{$assetsPath}croco.svg");
             opacity: 0.5;
         }
     }
-    &.x {
+    &.x:not(.wait) {
         .cell:not(.o):hover {
             background-image: url("#{$assetsPath}hippo.svg");
             opacity: 0.5;
         }
     }
+    &.wait{
+        .cell:hover{
+            cursor:wait;
+        }
+        &::after{
+            animation: progressBar 1.5s ease-in-out;
+            animation-fill-mode:both;
+            background-color: $main   ;
+            bottom:-5px;
+            content:''; 
+            grid-column: 1 / -1;
+            height: 3px;
+            position: absolute;
+            position: absolute;
+        }
+    } 
+    @keyframes progressBar {
+        0% { width: 0; }
+        100% { width: 100%; }
+      }
     .cell {
         align-items: center;
         background-color: $main2;
@@ -130,6 +151,7 @@ header {
         &.x {
             background-image: url("#{$assetsPath}hippo.svg");
         }
+        
     }
 }
 .scores {
