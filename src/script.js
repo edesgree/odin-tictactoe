@@ -11,29 +11,30 @@ const gameBoard = (() => {
     const X_CLASS = 'x';
     const O_CLASS = 'o';
     //gameboard module
-    const gameboard = ['', '', '', '', '', '', '', '', '',]
+    const movesHistory = ['', '', '', '', '', '', '', '', '',]
     const cells = [];
 
     const board = document.getElementById('board');
 
     const buildBoard = () => {
-        for (i = 0; i < gameboard.length; i++) {
+        for (i = 0; i < movesHistory.length; i++) {
             cells[i] = document.createElement('div');
             cells[i].classList.add('cell');
-            cells[i].setAttribute('data-cell', '');
+            cells[i].setAttribute('data-cell', i);
             board.appendChild(cells[i]);
         }
     }
     // const resetBoard = () => {
     //     console.log('resetBoard', resetBoard)
     //     player.turn = false;
-    //     for (let i = 0; i < gameboard.length; i++) {
+    //     for (let i = 0; i < movesHistory.length; i++) {
     //         console.log('cells[i]', cells[i])
     //         cells[i].classList.remove('x', 'o');
     //     }
     // };
     return {
         cells,
+        movesHistory,
         X_CLASS,
         O_CLASS,
         buildBoard
@@ -42,7 +43,11 @@ const gameBoard = (() => {
 
 
 const gameController = (() => {
-    console.log("startgame")
+    const gameModes = ['vshuman', 'vsbot'];
+    const gameModeActive = gameModes[1];
+    console.log('gameModeActive', gameModeActive)
+    
+    
     // display elements
     const statusElement = document.getElementById('game-status');
     const restartButton = document.getElementById('restartButton');
@@ -51,7 +56,7 @@ const gameController = (() => {
     // create players
     const playerO = player('Croco', 'o', false, 0);
     const playerX = player('Hippo', 'x', true, 0);
-    
+
     const WINNING_COMBINATIONS = [
         // gameboard
         // 0 1 2
@@ -92,14 +97,47 @@ const gameController = (() => {
         // write score in score div
         scoreDiv.innerText = player.score;
     }
+    function computerPlay() {
+        console.log(`computer choose ${botChoice()} index`)
+    }
+    function botChoice() {
+        // get empty cells
+        let emptyCells = [];
+        
+        console.log('hey',gameBoard.movesHistory)
+        console.log('gameBoard.movesHistory.length',gameBoard.movesHistory.length)
+        for (let i = 0; i < gameBoard.movesHistory.length; i++) {
+            
+            if (gameBoard.movesHistory[i] == '') {
+                emptyCells.push(i);
+            }
+        }
+        console.log('emptyCells', emptyCells)
+        // choose a random spot
+        let choice = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        console.log('choice', choice)
+        return choice;
+        
+    }
     // what to do when click on cell
     function handleClick(e) {
         console.log('clicked');
         const cell = e.target;
+        const cellIndex = cell.dataset.cell;
+        console.log('cellIndex', cellIndex)
+
         // change current class to the current players mark
         const currentClass = playerO.turn ? playerO.mark : playerX.mark;
+        // keep a track of the plays in the gameBoard array
+        gameBoard.movesHistory[cellIndex] = currentClass;
+        
         placeMark(cell, currentClass);
 
+        // call vsbot turn
+        if (gameModeActive == gameModes[1]) {
+        // computer turn                 A BOUGER
+        computerPlay();
+        }
         if (checkWin(currentClass)) {
             if (playerO.turn) {
                 updateScoreDisplay(playerO, scoreDivO);
@@ -120,7 +158,7 @@ const gameController = (() => {
             swapTurns();
             setBoardHoverClass();
         }
-       
+
     }
     // display next player when hovering cell
     function setBoardHoverClass() {
