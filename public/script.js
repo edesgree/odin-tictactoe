@@ -13,7 +13,7 @@ const gameBoard = (() => {
     //gameboard module
     const gameboard = ['', '', '', '', '', '', '', '', '',]
     const cells = [];
-    
+
     const board = document.getElementById('board');
 
     const buildBoard = () => {
@@ -24,26 +24,21 @@ const gameBoard = (() => {
             board.appendChild(cells[i]);
         }
     }
-    const resetBoard = () => {
-        console.log('resetBoard', resetBoard)
-        player.turn = false;
-        for (let i = 0; i < gameboard.length; i++) {
-
-
-            console.log('cells[i]', cells[i])
-            cells[i].classList.remove('x', 'o');
-        }
-    };
+    // const resetBoard = () => {
+    //     console.log('resetBoard', resetBoard)
+    //     player.turn = false;
+    //     for (let i = 0; i < gameboard.length; i++) {
+    //         console.log('cells[i]', cells[i])
+    //         cells[i].classList.remove('x', 'o');
+    //     }
+    // };
     return {
         cells,
         X_CLASS,
         O_CLASS,
-        buildBoard,
-        resetBoard
+        buildBoard
     }
 })();
-
-
 
 
 const gameController = (() => {
@@ -56,6 +51,7 @@ const gameController = (() => {
     // create players
     const playerO = player('Croco', 'o', false, 0);
     const playerX = player('Hippo', 'x', true, 0);
+    
     const WINNING_COMBINATIONS = [
         // gameboard
         // 0 1 2
@@ -75,7 +71,7 @@ const gameController = (() => {
     scoreDivO.innerText = playerO.score;
     scoreDivX.innerText = playerX.score;
     const startGame = () => {
-        
+
         gameState = true;
         console.log('gameState', gameState)
         gameBoard.cells.forEach(cell => {
@@ -113,20 +109,18 @@ const gameController = (() => {
                 console.log(`winner is ${playerX.name} with mark: ${playerX.mark}`);
             }
             endGame(draw = false);
-            gameState=false;
+            gameState = false;
             console.log('gameState', gameState)
 
         } else if (isDraw()) {
             endGame(draw = true);
-            gameState=false;
+            gameState = false;
             console.log('gameState', gameState)
         } else {
             swapTurns();
             setBoardHoverClass();
         }
-        //check win
-        //check draw
-        //switch turns
+       
     }
     // display next player when hovering cell
     function setBoardHoverClass() {
@@ -134,7 +128,7 @@ const gameController = (() => {
         board.classList.remove(playerO.mark)
         if (playerO.turn) {
             board.classList.add(playerO.mark)
-        } else if (playerX.turn){
+        } else if (playerX.turn) {
             board.classList.add(playerX.mark)
         }
     }
@@ -175,13 +169,12 @@ const gameController = (() => {
             statusElement.innerText = ``;
             endGameDisplay("It's a draw");
         } else {
-            
-            endGameDisplay( `${playerO.turn ? playerO.name : playerX.name} wins!`);
+            endGameDisplay(`${playerO.turn ? playerO.name : playerX.name} wins!`);
         }
         gameState = false;
-        
+
     }
-    function endGameDisplay(string){
+    function endGameDisplay(string) {
         board.setAttribute('data-overlay-content', string);
         board.classList.add('overlay');
         statusElement.innerText = ``;
@@ -195,52 +188,7 @@ const gameController = (() => {
 })();
 
 
-
-
 // build DOM gameboard
 gameBoard.buildBoard();
 // start game
 gameController.startGame();
-
-
-//startGame();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//displayController module
-var displayController = (function () {
-    function _displayBoard() {
-        console.log("_displayBoard");
-    }
-    function displayChoice() {
-        console.log('displayChoice');
-    }
-    function displayWinner() {
-        console.log('displayWinner')
-    }
-    return {
-        displayChoice: displayChoice,
-        displayWinner: displayWinner
-    };
-})();
-displayController.displayChoice();
-
-
-// create player
-const edouard = player("Edouard", 'X', false);
-edouard.greetName();
-
