@@ -46,8 +46,8 @@ const gameController = (() => {
     const gameModes = ['vshuman', 'vsbot'];
     const gameModeActive = gameModes[1];
     console.log('gameModeActive', gameModeActive)
-    
-    
+
+
     // display elements
     const statusElement = document.getElementById('game-status');
     const restartButton = document.getElementById('restartButton');
@@ -72,7 +72,6 @@ const gameController = (() => {
         [2, 4, 6]
     ];
     let gameState;
-    console.log('gameState', gameState)
     scoreDivO.innerText = playerO.score;
     scoreDivX.innerText = playerX.score;
     const startGame = () => {
@@ -84,7 +83,7 @@ const gameController = (() => {
             cell.classList.remove(playerX.mark);
             cell.classList.remove(playerO.mark);
             cell.removeEventListener('click', handleClick);
-            // add click event
+            // add click event (once:true so you can only choose this cell once in the game)
             cell.addEventListener('click', handleClick, { once: true })
         });
 
@@ -97,17 +96,17 @@ const gameController = (() => {
         // write score in score div
         scoreDiv.innerText = player.score;
     }
-    function computerPlay() {
-        console.log(`computer choose ${botChoice()} index`)
-    }
+    // function computerPlay(computerCell) {
+    //     console.log(`computer choose ${botChoice()} index`)
+    //     // computer is playerO.mark by default
+    //     placeMark(computerCell, playerO.mark);
+    // }
     function botChoice() {
         // get empty cells
         let emptyCells = [];
-        
-        console.log('hey',gameBoard.movesHistory)
-        console.log('gameBoard.movesHistory.length',gameBoard.movesHistory.length)
+
         for (let i = 0; i < gameBoard.movesHistory.length; i++) {
-            
+
             if (gameBoard.movesHistory[i] == '') {
                 emptyCells.push(i);
             }
@@ -115,29 +114,64 @@ const gameController = (() => {
         console.log('emptyCells', emptyCells)
         // choose a random spot
         let choice = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        console.log('choice', choice)
-        return choice;
         
+        return choice;
+
     }
     // what to do when click on cell
     function handleClick(e) {
-        console.log('clicked');
+
         const cell = e.target;
         const cellIndex = cell.dataset.cell;
-        console.log('cellIndex', cellIndex)
-
+        const cellAvailability = cell.dataset.empty;
+        console.log(`cellAvailability at ${cellIndex}`, cellAvailability)
+        
+        console.log(`Turn to play:${ playerO.turn ? playerO.name : playerX.name}`)
+function setCellInfo(){
+    
+}
         // change current class to the current players mark
         const currentClass = playerO.turn ? playerO.mark : playerX.mark;
+        console.log('currentClass begining of human turn ', currentClass)
+
         // keep a track of the plays in the gameBoard array
         gameBoard.movesHistory[cellIndex] = currentClass;
-        
-        placeMark(cell, currentClass);
 
-        // call vsbot turn
-        if (gameModeActive == gameModes[1]) {
-        // computer turn                 A BOUGER
-        computerPlay();
+        // if cell has not been taken by computer, we can place mark
+        if (!cellAvailability) {
+            
+            placeMark(cell, currentClass);
+            endTurn(currentClass);
+        console.log('currentClass end of human turn', currentClass)
+        }else{
+            console.log('case non disponible pour human')
         }
+
+        
+        // call vsbot turn
+        if (gameModeActive == gameModes[1] && playerO.turn) {
+            
+        console.log('hey', gameBoard.movesHistory)
+            // computer turn                 A BOUGER
+            
+            let a = botChoice()
+            console.log(`computer choose ${a} index`)
+            let computerCell = gameBoard.cells[a];
+            
+            // keep a track of the plays in the gameBoard array
+            gameBoard.movesHistory[a] = playerO.mark;
+            //setTimeout(() => {
+                placeMark(computerCell, playerO.mark);
+            endTurn(playerO.mark);
+             // }, 500);
+             console.log(`Turn to play:${ playerO.turn ? playerO.name : playerX.name}`)
+             console.log('hey2', gameBoard.movesHistory)
+        }
+        
+
+    }
+
+    function endTurn(currentClass){
         if (checkWin(currentClass)) {
             if (playerO.turn) {
                 updateScoreDisplay(playerO, scoreDivO);
@@ -158,7 +192,6 @@ const gameController = (() => {
             swapTurns();
             setBoardHoverClass();
         }
-
     }
     // display next player when hovering cell
     function setBoardHoverClass() {
@@ -172,7 +205,11 @@ const gameController = (() => {
     }
     // add the player selection as a class on the cell clicked
     function placeMark(cell, currentClass) {
+        if (cell.dataset.empty) {
+            console.log("deja pris !!!")
+        }
         cell.classList.add(currentClass);
+        cell.setAttribute('data-empty', false);
     }
     // player change
     function swapTurns() {
@@ -183,6 +220,8 @@ const gameController = (() => {
         statusElement.innerText = playerO.turn ? `It's ${playerO.name}'s turn` : `It's ${playerX.name}'s turn`;
         console.log('playerO.turn', playerO.turn)
         console.log('playerX.turn', playerX.turn)
+        currentClass = playerO.turn ? playerO.mark : playerX.mark;
+        console.log('currentClass', currentClass)
     }
 
     // check if the cell contain the current class and if its correspond to a combination in the combination table
