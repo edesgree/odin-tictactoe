@@ -1,4 +1,4 @@
-/*PROJECT CSS*/
+/*TICTACTOE CSS*/
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
 $containerWidth: min(100% - 2rem, 60rem);
 $assetsPath: "../images/";
@@ -79,14 +79,12 @@ header {
     display: grid;
     gap: 2px;
     grid-template-columns: repeat(3, auto);
-
     justify-content: center;
     margin-bottom: 20px;
     position: relative;
     &.overlay::before {
         align-items: center;
         background-color: rgba($main2, 0.8);
-
         color: white;
         content: attr(data-overlay-content);
         display: flex;
@@ -113,6 +111,7 @@ header {
         .cell:hover {
             cursor: wait;
         }
+        // vsbot progress bar
         &::after {
             animation: progressBar 1.5s ease-in-out;
             animation-fill-mode: both;
@@ -125,14 +124,7 @@ header {
             position: absolute;
         }
     }
-    @keyframes progressBar {
-        0% {
-            width: 0;
-        }
-        100% {
-            width: 100%;
-        }
-    }
+
     .cell {
         align-items: center;
         background-color: $main2;
@@ -199,7 +191,6 @@ select {
 button {
     background-color: $main;
     border: none;
-
     color: white;
     font-family: $font;
     font-weight: bold;
@@ -220,9 +211,16 @@ footer {
 }
 @media only screen and (min-width: 960px) {
 }
-
 @media only screen and (min-width: 1280px) {
 }
-
 @media only screen and (min-width: 1920px) {
+}
+// animations
+@keyframes progressBar {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
 }

@@ -1,4 +1,4 @@
-/*PROJECT CSS*/
+/*TICTACTOE CSS*/
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
 body {
   align-items: center;
@@ -109,14 +109,6 @@ header {
   position: absolute;
   position: absolute;
 }
-@keyframes progressBar {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
-}
 .board .cell {
   align-items: center;
   background-color: #17c3b2;
@@ -198,4 +190,13 @@ button:hover {
 
 footer {
   padding: 20px;
+}
+
+@keyframes progressBar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
 }
