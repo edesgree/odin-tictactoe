@@ -82,6 +82,7 @@ const gameController = (() => {
             // remove css class and click event
             cell.classList.remove(playerX.mark);
             cell.classList.remove(playerO.mark);
+            cell.removeAttribute("data-taken");
             cell.removeEventListener('click', handleClick);
             // add click event (once:true so you can only choose this cell once in the game)
             cell.addEventListener('click', handleClick, { once: true })
@@ -123,7 +124,7 @@ const gameController = (() => {
 
         const cell = e.target;
         const cellIndex = cell.dataset.cell;
-        const cellAvailability = cell.dataset.empty;
+        const cellAvailability = cell.dataset.taken;
         console.log(`cellAvailability at ${cellIndex}`, cellAvailability)
         
         console.log(`Turn to play:${ playerO.turn ? playerO.name : playerX.name}`)
@@ -182,11 +183,14 @@ function setCellInfo(){
             }
             endGame(draw = false);
             gameState = false;
+            gameBoard.movesHistory.fill("");
             console.log('gameState', gameState)
 
         } else if (isDraw()) {
             endGame(draw = true);
             gameState = false;
+            //empty moves history
+            gameBoard.movesHistory.fill("");
             console.log('gameState', gameState)
         } else {
             swapTurns();
@@ -205,11 +209,11 @@ function setCellInfo(){
     }
     // add the player selection as a class on the cell clicked
     function placeMark(cell, currentClass) {
-        if (cell.dataset.empty) {
+        if (cell.dataset.taken) {
             console.log("deja pris !!!")
         }
         cell.classList.add(currentClass);
-        cell.setAttribute('data-empty', false);
+        cell.setAttribute('data-taken', true);
     }
     // player change
     function swapTurns() {
