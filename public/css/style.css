@@ -1,12 +1,12 @@
 /*PROJECT CSS*/
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
 body {
   align-items: center;
   background-color: #fef9ef;
   color: #323031;
   display: flex;
   flex-direction: column;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Comfortaa", cursive;
 }
 
 *,
@@ -53,7 +53,7 @@ h6 {
 }
 
 header {
-  color: #227c9d;
+  color: #2ca124;
 }
 
 #game-status {
@@ -66,9 +66,22 @@ header {
   display: grid;
   gap: 2px;
   grid-template-columns: repeat(3, auto);
-  height: 70vh;
   justify-content: center;
-  width: 70vh;
+  margin-bottom: 20px;
+  position: relative;
+}
+.board.overlay::before {
+  align-items: center;
+  background-color: rgba(23, 195, 178, 0.8);
+  color: white;
+  content: attr(data-overlay-content);
+  display: flex;
+  font-weight: bold;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
 }
 .board.o .cell:not(.x):hover {
   background-image: url("../images/croco.svg");
@@ -108,6 +121,10 @@ header {
   justify-content: space-between;
   margin-bottom: 20px;
 }
+.scores img {
+  display: inline-block;
+  transform: scale(-1, 1);
+}
 
 .controls {
   display: flex;
@@ -116,15 +133,16 @@ header {
 }
 
 button {
-  background-color: #227c9d;
+  background-color: #2ca124;
   border: none;
   border-radius: 5px;
   color: white;
+  font-family: "Comfortaa", cursive;
   font-weight: bold;
   padding: 15px 20px;
 }
 button:hover {
-  background-color: #4db3d8;
+  background-color: #5bd853;
   cursor: pointer;
 }
 

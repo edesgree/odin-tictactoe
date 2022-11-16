@@ -18,12 +18,18 @@
     </header>
 
     <main class="">
-        
-        <div class="board" id="board"></div>
+
+        <div class="board" id="board" data-overlay-content=""></div>
         <div id="game-status"></div>
         <div class="scores">
-            <div class="scoreX">Player X:<span id="score-player-x"></span></div>
-            <div class="scoreO">Player O:<span id="score-player-o"></span></div>
+            <div class="scoreX">
+                <img width="40" alt="player-x" src="images/hippo-sm.svg">
+                :<span id="score-player-x"></span>
+            </div>
+            <div class="scoreO">
+                <img width="40" alt="player-o" src="images/croco-sm.svg">
+                :<span id="score-player-o"></span>
+            </div>
         </div>
         <div class="controls">
             <button id="restartButton" class="reset">Restart</button>

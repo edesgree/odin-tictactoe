@@ -54,8 +54,8 @@ const gameController = (() => {
     const scoreDivO = document.getElementById('score-player-o');
     const scoreDivX = document.getElementById('score-player-x');
     // create players
-    const playerO = player('john', 'o', false, 0);
-    const playerX = player('bob', 'x', true, 0);
+    const playerO = player('Croco', 'o', false, 0);
+    const playerX = player('Hippo', 'x', true, 0);
     const WINNING_COMBINATIONS = [
         // gameboard
         // 0 1 2
@@ -70,10 +70,14 @@ const gameController = (() => {
         [0, 4, 8],
         [2, 4, 6]
     ];
+    let gameState;
+    console.log('gameState', gameState)
     scoreDivO.innerText = playerO.score;
     scoreDivX.innerText = playerX.score;
     const startGame = () => {
         statusElement.innerText = `It's playerX.turn!!!`;
+        gameState = true;
+        console.log('gameState', gameState)
         gameBoard.cells.forEach(cell => {
             // remove css class and click event
             cell.classList.remove(playerX.mark);
@@ -109,9 +113,13 @@ const gameController = (() => {
                 console.log(`winner is ${playerX.name} with mark: ${playerX.mark}`);
             }
             endGame(draw = false);
+            gameState=false;
+            console.log('gameState', gameState)
 
         } else if (isDraw()) {
             endGame(draw = true);
+            gameState=false;
+            console.log('gameState', gameState)
         } else {
             swapTurns();
             setBoardHoverClass();
@@ -126,7 +134,7 @@ const gameController = (() => {
         board.classList.remove(playerO.mark)
         if (playerO.turn) {
             board.classList.add(playerO.mark)
-        } else {
+        } else if (playerX.turn){
             board.classList.add(playerX.mark)
         }
     }
@@ -140,7 +148,7 @@ const gameController = (() => {
         playerX.turn = !playerX.turn;
 
         // display players turn
-        statusElement.innerText = playerO.turn ? `It's playerO turn` : `It's playerX turn`;
+        statusElement.innerText = playerO.turn ? `It's ${playerO.name}'s turn` : `It's ${playerX.name}'s turn`;
         console.log('playerO.turn', playerO.turn)
         console.log('playerX.turn', playerX.turn)
     }
@@ -164,14 +172,23 @@ const gameController = (() => {
     }
     function endGame(draw = true) {
         if (draw) {
-            statusElement.innerText = `It's a draw`;
+            statusElement.innerText = ``;
+            endGameDisplay("It's a draw");
         } else {
-            statusElement.innerText = `${playerO.turn ? "O" : "X"} wins!`;
+            
+            endGameDisplay( `${playerO.turn ? playerO.name : playerX.name} wins!`);
         }
-        return false;
+        gameState = false;
+        
+    }
+    function endGameDisplay(string){
+        board.setAttribute('data-overlay-content', string);
+        board.classList.add('overlay');
+        statusElement.innerText = ``;
     }
     restartButton.addEventListener('click', () => {
         console.log("restart");
+        board.classList.remove('overlay');
         startGame();
     })
     return { startGame }
