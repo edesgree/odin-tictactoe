@@ -43,7 +43,7 @@ const gameBoard = (() => {
 
 
 const gameController = (() => {
-    const vsbot = true;
+    let vsbot = false;
     
     
 
@@ -53,6 +53,9 @@ const gameController = (() => {
     const restartButton = document.getElementById('restartButton');
     const scoreDivO = document.getElementById('score-player-o');
     const scoreDivX = document.getElementById('score-player-x');
+    const opponentChoice = document.getElementById('vsbot');
+    
+
     // create players
     const playerO = player('Croco', 'o', false, 0);
     const playerX = player('Hippo', 'x', true, 0);
@@ -74,8 +77,8 @@ const gameController = (() => {
     let gameState;
     scoreDivO.innerText = playerO.score;
     scoreDivX.innerText = playerX.score;
-    const startGame = () => {
-
+    const startGame = (vsbot) => {
+        console.log('vsbot', vsbot)
         resetTurn();
         console.log('gameState', gameState)
         gameBoard.cells.forEach(cell => {
@@ -122,6 +125,7 @@ const gameController = (() => {
     // what to do when click on cell
     function handleClick(e) {
         let humanCanPlay = true;
+        console.log('vsbot in handleClick',vsbot)
         const cell = e.target;
         const cellIndex = cell.dataset.cell;
         const cellAvailability = cell.dataset.taken;
@@ -161,12 +165,12 @@ const gameController = (() => {
             console.log('hey', gameBoard.movesHistory)
             // computer turn                 A BOUGER
 
-            let a = botChoice()
-            console.log(`computer choose ${a} index`)
-            let computerCell = gameBoard.cells[a];
+            let botMove = botChoice()
+            console.log(`computer choose ${botMove} index`)
+            let computerCell = gameBoard.cells[botMove];
 
             // keep a track of the plays in the gameBoard array
-            gameBoard.movesHistory[a] = playerO.mark;
+            gameBoard.movesHistory[botMove] = playerO.mark;
             setTimeout(() => {
                 placeMark(computerCell, playerO.mark);
                 endTurn(playerO.mark);
@@ -278,8 +282,11 @@ const gameController = (() => {
     restartButton.addEventListener('click', () => {
         console.log("restart");
         board.classList.remove('overlay');
-        startGame();
+        startGame(vsbot=('true'===opponentChoice.value));
     })
+    // opponentChoice.addEventListener('change', () => {
+    //     vsbot=opponentChoice.value;
+    // })
     function toggleWaitCursor(){
         board.classList.toggle('wait');
     }
