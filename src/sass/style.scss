@@ -80,13 +80,13 @@ header {
     width: 70vh;
     &.o {
         .cell:not(.x):hover {
-            background-image: url("#{$assetsPath}o.svg");
+            background-image: url("#{$assetsPath}croco.svg");
             opacity: 0.5;
         }
     }
     &.x {
         .cell:not(.o):hover {
-            background-image: url("#{$assetsPath}x.svg");
+            background-image: url("#{$assetsPath}hippo.svg");
             opacity: 0.5;
         }
     }
@@ -106,11 +106,11 @@ header {
             background-color: lighten($main2, 20%);
             cursor: pointer;
         }
-        &.x {
-            background-image: url("#{$assetsPath}x.svg");
-        }
         &.o {
-            background-image: url("#{$assetsPath}o.svg");
+            background-image: url("#{$assetsPath}croco.svg");
+        }
+        &.x {
+            background-image: url("#{$assetsPath}hippo.svg");
         }
     }
 }

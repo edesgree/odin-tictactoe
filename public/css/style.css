@@ -71,11 +71,11 @@ header {
   width: 70vh;
 }
 .board.o .cell:not(.x):hover {
-  background-image: url("../images/o.svg");
+  background-image: url("../images/croco.svg");
   opacity: 0.5;
 }
 .board.x .cell:not(.o):hover {
-  background-image: url("../images/x.svg");
+  background-image: url("../images/hippo.svg");
   opacity: 0.5;
 }
 .board .cell {
@@ -95,11 +95,11 @@ header {
   background-color: #55ebdc;
   cursor: pointer;
 }
-.board .cell.x {
-  background-image: url("../images/x.svg");
-}
 .board .cell.o {
-  background-image: url("../images/o.svg");
+  background-image: url("../images/croco.svg");
+}
+.board .cell.x {
+  background-image: url("../images/hippo.svg");
 }
 
 .scores {
